@@ -29,8 +29,10 @@ export default async () => {
         return {
           models,
           loaders: {
-            user: new DataLoader(keys => loaders.user.batchUsers(keys, models))
-          }
+            user: new DataLoader((keys) =>
+              loaders.user.batchUsers(keys, models),
+            ),
+          },
         };
       }
 
@@ -40,21 +42,26 @@ export default async () => {
         return {
           models,
           me,
-          secret: process.env.SECRET,
+          secret: process.env.ACCESS_TOKEN_SECRET,
           loaders: {
-            user: new DataLoader(keys => loaders.user.batchUsers(keys, models))
-          }
+            user: new DataLoader((keys) =>
+              loaders.user.batchUsers(keys, models),
+            ),
+          },
         };
       }
-    }
+    },
   });
 
   server.applyMiddleware({ app, path: '/graphql' });
 
-  await mongoose.connect(process.env.MONGO_DB, {
+  const mongoUrl = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
+  console.log(mongoUrl);
+  await mongoose.connect(mongoUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: true
+    useFindAndModify: true,
+    useUnifiedTopology: true,
   });
   app.listen({ port }, () => {
     console.log(`Apollo Server on http://localhost:${port}/graphql`);
