@@ -55,7 +55,8 @@ export default async () => {
 
   server.applyMiddleware({ app, path: '/graphql' });
 
-  const mongoUrl = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
+  // const mongoUrl = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
+  const mongoUrl = 'mongodb://localhost:27017/nodejs-demo';
   console.log(mongoUrl);
   await mongoose.connect(mongoUrl, {
     useNewUrlParser: true,

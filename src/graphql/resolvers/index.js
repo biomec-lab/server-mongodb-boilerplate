@@ -5,12 +5,12 @@ import userResolvers from './user';
 // import eventResolvers from './event';
 
 const customScalarResolver = {
-  Date: GraphQLDateTime
+  Date: GraphQLDateTime,
 };
 
 export default [
   customScalarResolver,
-  userResolvers
+  userResolvers,
   // deviceResolvers,
   // eventResolvers
 ];
